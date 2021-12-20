@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "616243502406",
+    "project_id": "social-app-fe90e",
+    "storage_bucket": "social-app-fe90e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616243502406:android:4b2b3fea9bac3efa379947",
+        "android_client_info": {
+          "package_name": "com.marco_nagy.social_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616243502406-ok3a5fo5rrjjh5sk7m68ub9rm7dnil2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marco_nagy.social_app",
+            "certificate_hash": "0567675ff507ebd3ec4e4f37d0115d18be1778ff"
+          }
+        },
+        {
+          "client_id": "616243502406-cog75hr6hbj87nvgauqpt0c33h6k9hfn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHi7N7si98zNyR8IAU_vqbioDcVJMNqlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616243502406-cog75hr6hbj87nvgauqpt0c33h6k9hfn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
