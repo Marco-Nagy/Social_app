@@ -11,7 +11,6 @@ class GetSearchNewsState extends AppState{}
 
 
 
-
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(InitAppsState());
   static AppCubit get(context) => BlocProvider.of(context);
