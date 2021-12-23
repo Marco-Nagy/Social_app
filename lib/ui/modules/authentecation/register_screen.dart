@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/cubit/register_cubit.dart';
+import 'package:social_app/ui/modules/social_layout.dart';
 
-import '../../../Components.dart';
+import '../../../shared/Components.dart';
 
 
 class RegisterScreen extends StatelessWidget {
@@ -25,7 +26,9 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterCubit, RegisterStates>(
 
         listener: (context, state) {
-
+          if(state is CreateUserSuccessState){
+            navigateAndFinish(context, SocialLayout());
+          }
         },
         builder: (context, state) {
 

@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/cubit/login_cubit.dart';
+import 'package:social_app/data/my_shared.dart';
 import 'package:social_app/ui/modules/authentecation/register_screen.dart';
-import '../../../Components.dart';
+import 'package:social_app/ui/modules/social_layout.dart';
+import '../../../shared/Components.dart';
 
 
 class LoginScreen extends StatelessWidget {
@@ -19,7 +21,22 @@ class LoginScreen extends StatelessWidget {
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
-        },
+          if (state is LoginErrorState) {
+              showToast(message: state.error.toString());
+              return;
+
+            } if(state is LoginSuccessState)  {
+          MyShared.saveData(
+              'uId', state.uId)
+              .then((value) {
+            print(value);
+            navigateAndFinish(context, SocialLayout());
+          });
+
+          navigateAndFinish(context, SocialLayout());
+              //showToast(message: state.loginResponse.message.toString());
+            }
+          },
         builder: (context, state) {
           return Scaffold(
             body: SafeArea(
