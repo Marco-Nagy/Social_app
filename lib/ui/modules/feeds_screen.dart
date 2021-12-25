@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:social_app/shared/Components.dart';
+import 'package:social_app/ui/modules/story_screen.dart';
 
 class FeedsScreen extends StatelessWidget {
   const FeedsScreen({Key? key}) : super(key: key);
@@ -16,6 +19,14 @@ class FeedsScreen extends StatelessWidget {
         child: ListView(
           children: [
             buildStories(context),
+            myDivider(),
+            ListView.separated(
+              physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) => buildPostItem(context),
+              separatorBuilder: (context, index) => myDivider(),
+              itemCount: 20,
+            ),
           ],
         ),
       );
@@ -40,7 +51,8 @@ class FeedsScreen extends StatelessWidget {
                             Color(0xff833ab4),
                             Color(0xfffd1d1d),
                             Color(0xfffcb045),
-                          ],),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -87,11 +99,9 @@ class FeedsScreen extends StatelessWidget {
     );
   }
 
-  onAddStoryTapped() {}
-
   buildStoryItem(context) {
     return InkWell(
-      onTap: () => onAddStoryTapped(),
+      onTap: () => onShowStoryTapped(context),
       child: Column(
         children: [
           Stack(
@@ -104,10 +114,11 @@ class FeedsScreen extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                       colors: [
-                      Color(0xff833ab4),
-                      Color(0xfffd1d1d),
-                      Color(0xfffcb045),
-                    ],),
+                        Color(0xff833ab4),
+                        Color(0xfffd1d1d),
+                        Color(0xfffcb045),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -128,5 +139,187 @@ class FeedsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  buildPostItem(context) {
+    return Card(
+      color: Colors.black45,
+      elevation: 15,
+      shadowColor: Colors.grey,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 26,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xff833ab4),
+                                      Color(0xfffd1d1d),
+                                      Color(0xfffcb045),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            CircleAvatar(
+                              radius: 23,
+                              backgroundImage: NetworkImage(
+                                  "https://preview.free3d.com/img/2016/09/2212599006184343186/9fh43hvi-900.jpg"),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Marco Nagy',
+                          style: Theme.of(context).textTheme.bodyText1,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          'Alexandria El-Montazah ',
+                          style: Theme.of(context).textTheme.bodyText2,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Feather.more_horizontal,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: 5,
+              shadowColor: Colors.white,
+              child: Image(
+                height: 300,
+                fit: BoxFit.fill,
+                image: NetworkImage(
+                  'https://image.freepik.com/free-vector/modern-merry-christmas-card-with-claus_1361-2803.jpg',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      MaterialIcons.favorite_border,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      CupertinoIcons.chat_bubble,
+                      color: Colors.blue.shade300,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Feather.send,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Feather.bookmark,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                '14304 Likes',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                    text:  'Marco Nagy',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    TextSpan(
+                    text:  ' ',
+                    ),
+                    TextSpan(
+                      text:  'Hello world Hello world Hello world Hello world',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  onAddStoryTapped() async {
+    final ImagePicker _picker = ImagePicker();
+    // Pick an image
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    print(image!.path);
+    // // Capture a photo
+    // final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    // // Pick a video
+    // final XFile? xImage = await _picker.pickVideo(source: ImageSource.gallery);
+    // // Capture a video
+    // final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
+    // // Pick multiple images
+    // final List<XFile>? images = await _picker.pickMultiImage();
+  }
+
+  onShowStoryTapped(context) {
+    navigateTo(context, StoryScreen());
   }
 }

@@ -88,5 +88,5 @@ Widget myDivider()=>
     Divider(
       color: Colors.white,
       thickness: 0.3,
-      height: 5,
+      height: 8,
     );

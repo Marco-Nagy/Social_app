@@ -40,6 +40,10 @@ dependencies:
   firebase_auth: ^3.3.4
   cloud_firestore: ^3.1.5
   flutter_font_icons: ^2.2.4
+  story_view: ^0.13.2
+  image_picker: ^0.8.4+1
+  quds_popup_menu: ^0.0.1+1
+  focused_menu: ^1.0.5
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +80,11 @@ flutter:
     - family: fontSpring
       fonts:
         - asset: assets/fonts/Fontspring_regular.otf
+          weight: 700
+
+    - family: jannah
+      fonts:
+        - asset: assets/fonts/jannah.ttf
           weight: 700
 
     - family: IconBrocen
