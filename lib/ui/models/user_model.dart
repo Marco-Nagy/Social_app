@@ -5,6 +5,8 @@ class UserData {
   String name;
   String phone;
   String uId;
+  String image;
+  String bio;
   bool isEmailVerified;
 
   UserData({
@@ -12,6 +14,8 @@ class UserData {
     required this.email,
     required this.name,
     required this.uId,
+    required this.image,
+    required this.bio,
     required this.isEmailVerified,
   });
 
@@ -21,6 +25,8 @@ class UserData {
       name: json['name'],
       phone: json['phone'],
       uId: json['uId'],
+      image: json['image'],
+      bio: json['bio'],
       isEmailVerified: json['isEmailVerified'],
     );
   }

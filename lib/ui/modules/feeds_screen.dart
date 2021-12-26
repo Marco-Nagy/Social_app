@@ -265,7 +265,7 @@ class FeedsScreen extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(
                       Feather.bookmark,
-                      color: Colors.white,
+                      color: Colors.amber,
                     ),
                   ),
                 ],
