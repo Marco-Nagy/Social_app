@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/cubit/register_cubit.dart';
+import 'package:social_app/ui/modules/authentecation/login_screen.dart';
 import 'package:social_app/ui/modules/social_layout.dart';
 
 import '../../../shared/Components.dart';
@@ -71,7 +72,7 @@ class RegisterScreen extends StatelessWidget {
                             validator: (value) => emailValidator(value),
                             label: "Email Address",
                             prefixIcon: Icons.mail,
-                            inputAction: TextInputAction.next),
+                            inputAction: TextInputAction.next, context: context),
                         SizedBox(
                           height: 10,
                         ),
@@ -81,7 +82,7 @@ class RegisterScreen extends StatelessWidget {
                             validator: (value) => userNameValidator(value),
                             label: "User Name",
                             prefixIcon: Icons.person_rounded,
-                            inputAction: TextInputAction.next),
+                            inputAction: TextInputAction.next, context: context),
                         SizedBox(
                           height: 10,
                         ),
@@ -91,7 +92,7 @@ class RegisterScreen extends StatelessWidget {
                             validator: (value) => phoneValidator(value),
                             label: "Phone No",
                             prefixIcon: Icons.phone,
-                            inputAction: TextInputAction.next),
+                            inputAction: TextInputAction.next, context: context),
                         SizedBox(
                           height: 10,
                         ),
@@ -107,7 +108,7 @@ class RegisterScreen extends StatelessWidget {
                               RegisterCubit.get(context).changeRegisterPasswordVisibility();
                             },
                             icon: Icon(RegisterCubit.get(context).suffix),
-                          ),
+                          ), context: context,
                         ),
                         SizedBox(
                           height: 10,
@@ -133,7 +134,7 @@ class RegisterScreen extends StatelessWidget {
                               RegisterCubit.get(context).changeRegisterPasswordVisibility();
                             },
                             icon: Icon(RegisterCubit.get(context).suffix),
-                          ),
+                          ), context: context,
                         ),
                         SizedBox(
                           height: 10,

@@ -8,6 +8,7 @@ Widget defaultButton({
   double radius = 30,
   required String text,
   Function()? function,
+  double? fontSize,
 }) =>
     Container(
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -23,11 +24,12 @@ Widget defaultButton({
           text.toUpperCase(),
           style: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: fontSize,
           ),
         ),
       ),
     );
+
 
 Widget defaultTextField(
         {required TextEditingController controller,
@@ -40,8 +42,12 @@ Widget defaultTextField(
           ValueChanged? onChange,
           FormFieldSetter<String>? onSaved,
         Function? onFieldSubmitted,
-        bool obscureText = false}) =>
+        bool obscureText = false,
+
+        required BuildContext context,
+        }) =>
     TextFormField(
+
       controller: controller,
       obscureText: obscureText,
       keyboardType: type,
@@ -51,6 +57,8 @@ Widget defaultTextField(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
         ),
+        filled: true,
+        fillColor: Theme.of(context).primaryColor,
         prefixIcon: Icon(
           prefixIcon,
         ),

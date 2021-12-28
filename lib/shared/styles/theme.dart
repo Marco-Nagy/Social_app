@@ -38,14 +38,25 @@ ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
+    subtitle1: TextStyle(
+      fontSize:16,
+      fontWeight: FontWeight.w600,
+      color: Colors.white60,
+    ),
+    subtitle2: TextStyle(
+      fontSize:16,
+      fontWeight: FontWeight.w400,
+      color: Colors.blueGrey,
+    ),
   ),
   cardTheme: CardTheme(
     color: Colors.blue,
   ),
   cardColor: Colors.white,
-  focusColor: Colors.redAccent,
-  primarySwatch: Colors.blue,
-  primaryColor: Colors.grey.shade200,
+  backgroundColor: Colors.white,
+  focusColor: Colors.red,
+  primarySwatch: Colors.red,
+  primaryColor: Colors.grey.shade500,
   primaryTextTheme: TextTheme(
     subtitle1: TextStyle(
       fontSize: 18,
@@ -94,6 +105,16 @@ ThemeData darkTheme = ThemeData(
       fontWeight: FontWeight.w400,
       color: Colors.white,
     ),
+    subtitle1: TextStyle(
+      fontSize:16,
+      fontWeight: FontWeight.w600,
+      color: Colors.white,
+    ),
+    subtitle2: TextStyle(
+      fontSize:15,
+      fontWeight: FontWeight.w400,
+      color: Colors.white60,
+    ),
 
   ),
   primaryTextTheme: TextTheme(
@@ -106,9 +127,9 @@ ThemeData darkTheme = ThemeData(
   cardTheme: CardTheme(
     color: Colors.grey.shade600,
   ),
-  cardColor: Colors.black,
+  backgroundColor: Colors.black,
   focusColor: Colors.white,
-  primaryColor: Colors.grey.shade700,
+  primaryColor: Colors.grey.shade500,
   primarySwatch: Colors.amber,
 
 );

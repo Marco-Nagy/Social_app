@@ -53,7 +53,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
         phone: phone,
         email: email,
         uId: value.user!.uid,
-
       );
 
     }).catchError((error) {
@@ -74,8 +73,10 @@ class RegisterCubit extends Cubit<RegisterStates> {
       email: email,
       uId: uId,
       image: 'https://preview.free3d.com/img/2016/09/2212599006184343186/9fh43hvi-900.jpg',
+      cover: 'https://image.freepik.com/free-vector/modern-merry-christmas-card-with-claus_1361-2803.jp',
       isEmailVerified:false,
       bio: 'Write Your bio ...',
+
 
     );
     FirebaseFirestore.instance

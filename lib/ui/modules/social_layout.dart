@@ -39,30 +39,15 @@ class SocialLayout extends StatelessWidget {
           ),
         ),
         actions: [
-          // PopupMenuButton(
-          //
-          //     icon: Icon(MaterialIcons.add_box),
-          //     color: Colors.black,
-          //     elevation: 40,
-          //     shape: OutlineInputBorder(
-          //         borderSide: BorderSide(
-          //             color: Colors.grey,
-          //             width: 2,
-          //           style: BorderStyle.solid,
-          //         )
-          //     ),
-          //     itemBuilder: (context) => [
-          //
-          //         ]),
           IconButton(
               onPressed: () {
                 onAddBoxTapped(context);
               },
-              icon: Icon(MaterialIcons.add_box)),
+              icon: Icon(MaterialIcons.add_box),color: Theme.of(context).focusColor,),
           IconButton(
-              onPressed: () {}, icon: Icon(MaterialIcons.favorite_border)),
+              onPressed: () {}, icon: Icon(MaterialIcons.favorite_border),color: Theme.of(context).focusColor,),
 
-          IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.chat_bubble)),
+          IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.chat_bubble),color: Theme.of(context).focusColor,),
         ],
       );
 

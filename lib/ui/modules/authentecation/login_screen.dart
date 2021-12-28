@@ -77,6 +77,7 @@ class LoginScreen extends StatelessWidget {
                         label: "Email",
                         prefixIcon: Icons.email_rounded,
                         inputAction: TextInputAction.next,
+                        context: context,
                       ),
                       SizedBox(
                         height: 10,
@@ -94,6 +95,7 @@ class LoginScreen extends StatelessWidget {
                           },
                           icon: Icon(LoginCubit.get(context).suffix),
                         ),
+                        context: context,
                       ),
                       SizedBox(
                         height: 30,

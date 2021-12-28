@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:social_app/cubit/social_cubit.dart';
 
 import 'package:social_app/shared/Components.dart';
 import 'package:social_app/ui/modules/story_screen.dart';
@@ -59,7 +60,7 @@ class FeedsScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 35,
                     backgroundImage: NetworkImage(
-                        "https://preview.free3d.com/img/2016/09/2212599006184343186/9fh43hvi-900.jpg"),
+                        SocialCubit.get(context).userData.image.toString()),
                   ),
                   CircleAvatar(
                     backgroundColor: Colors.black,
@@ -143,9 +144,9 @@ class FeedsScreen extends StatelessWidget {
 
   buildPostItem(context) {
     return Card(
-      color: Colors.black45,
+      color: Theme.of(context).backgroundColor,
       elevation: 15,
-      shadowColor: Colors.grey,
+      shadowColor: Theme.of(context).primaryColor,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
@@ -181,7 +182,7 @@ class FeedsScreen extends StatelessWidget {
                             CircleAvatar(
                               radius: 23,
                               backgroundImage: NetworkImage(
-                                  "https://preview.free3d.com/img/2016/09/2212599006184343186/9fh43hvi-900.jpg"),
+                                  SocialCubit.get(context).userData.image.toString()),
                             ),
                           ],
                         ),
@@ -217,7 +218,7 @@ class FeedsScreen extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(
                       Feather.more_horizontal,
-                      color: Colors.white,
+                      color: Theme.of(context).focusColor,
                     ),
                   ),
                 ],
@@ -257,7 +258,7 @@ class FeedsScreen extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(
                       Feather.send,
-                      color: Colors.white,
+                      color: Colors.grey,
                     ),
                   ),
                   Spacer(),

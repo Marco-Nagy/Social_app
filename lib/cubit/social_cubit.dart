@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:social_app/data/my_shared.dart';
-import 'package:social_app/shared/styles/icon_broken.dart';
 import 'package:social_app/ui/models/user_model.dart';
-import 'package:social_app/shared/constants.dart';
-import 'package:social_app/ui/modules/chats_screen.dart';
 import 'package:social_app/ui/modules/feeds_screen.dart';
 import 'package:social_app/ui/modules/search_screen.dart';
 import 'package:social_app/ui/modules/settings_screen.dart';
@@ -34,7 +31,7 @@ class SocialCubit extends Cubit<SocialStates> {
 
   static SocialCubit get(context) => BlocProvider.of(context);
   static String uid = MyShared.getData('uId');
-  UserData? userData;
+  UserData userData =UserData() ;
 
   void getUserData() {
     emit(SocialGetUserLoadingState());
@@ -43,7 +40,8 @@ class SocialCubit extends Cubit<SocialStates> {
         .doc(uid)
         .get()
         .then((value) {
-          print(value.data());
+          //print(value.data());
+      userData = UserData.fromJson(value.data());
           emit(SocialGetUserSuccessState());
     }).catchError((error){
       print(error.toString());
