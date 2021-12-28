@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
+import 'package:flutter_image/network.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/cubit/social_cubit.dart';
 
@@ -12,7 +14,13 @@ class FeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenBody(context);
+    return BlocConsumer<SocialCubit,SocialStates>(
+      listener: (context, state) {},
+
+      builder: (context, state) {
+        return screenBody(context);
+      },
+    );
   }
 
   Widget screenBody(BuildContext context) => Padding(
@@ -59,7 +67,7 @@ class FeedsScreen extends StatelessWidget {
                   ),
                   CircleAvatar(
                     radius: 35,
-                    backgroundImage: NetworkImage(
+                    backgroundImage: NetworkImageWithRetry(
                         SocialCubit.get(context).userData.image.toString()),
                   ),
                   CircleAvatar(
@@ -181,8 +189,11 @@ class FeedsScreen extends StatelessWidget {
                             ),
                             CircleAvatar(
                               radius: 23,
-                              backgroundImage: NetworkImage(
-                                  SocialCubit.get(context).userData.image.toString()),
+                              backgroundImage: NetworkImageWithRetry(
+                                  SocialCubit.get(context)
+                                      .userData
+                                      .image
+                                      .toString()),
                             ),
                           ],
                         ),
@@ -285,14 +296,14 @@ class FeedsScreen extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                    text:  'Marco Nagy',
+                      text: 'Marco Nagy',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     TextSpan(
-                    text:  ' ',
+                      text: ' ',
                     ),
                     TextSpan(
-                      text:  'Hello world Hello world Hello world Hello world',
+                      text: 'Hello world Hello world Hello world Hello world',
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ],
