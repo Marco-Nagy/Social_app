@@ -6,7 +6,7 @@ import 'package:social_app/cubit/login_cubit.dart';
 import 'package:social_app/data/my_shared.dart';
 import 'package:social_app/ui/modules/authentecation/register_screen.dart';
 import 'package:social_app/ui/modules/social_layout.dart';
-import '../../../shared/Components.dart';
+import '../../../shared/components.dart';
 
 
 class LoginScreen extends StatelessWidget {

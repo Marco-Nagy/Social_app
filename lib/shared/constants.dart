@@ -1,5 +1,5 @@
 import 'package:social_app/data/my_shared.dart';
-import 'package:social_app/shared/Components.dart';
+import 'package:social_app/shared/components.dart';
 import 'package:social_app/ui/modules/authentecation/login_screen.dart';
 
 void signOut(context){
@@ -8,6 +8,4 @@ void signOut(context){
       navigateAndFinish(context, LoginScreen());
     }
   });
-  String token = '';
-  String uId = '';
 }

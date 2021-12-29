@@ -6,7 +6,7 @@ import 'package:flutter_image/network.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/cubit/social_cubit.dart';
 
-import 'package:social_app/shared/Components.dart';
+import 'package:social_app/shared/components.dart';
 import 'package:social_app/ui/modules/story_screen.dart';
 
 class FeedsScreen extends StatelessWidget {

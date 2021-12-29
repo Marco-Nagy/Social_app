@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -30,24 +31,21 @@ Widget defaultButton({
       ),
     );
 
-
-Widget defaultTextField(
-        {required TextEditingController controller,
-        required TextInputType type,
-        TextInputAction inputAction = TextInputAction.next,
-        required FormFieldValidator validator,
-        required String label,
-        required IconData prefixIcon,
-        Widget? suffixIcon,
-          ValueChanged? onChange,
-          FormFieldSetter<String>? onSaved,
-        Function? onFieldSubmitted,
-        bool obscureText = false,
-
-        required BuildContext context,
-        }) =>
+Widget defaultTextField({
+  required TextEditingController controller,
+  required TextInputType type,
+  TextInputAction inputAction = TextInputAction.next,
+  required FormFieldValidator validator,
+  required String label,
+  required IconData prefixIcon,
+  Widget? suffixIcon,
+  ValueChanged? onChange,
+  FormFieldSetter<String>? onSaved,
+  Function? onFieldSubmitted,
+  bool obscureText = false,
+  required BuildContext context,
+}) =>
     TextFormField(
-
       controller: controller,
       obscureText: obscureText,
       keyboardType: type,
@@ -58,26 +56,28 @@ Widget defaultTextField(
           borderRadius: BorderRadius.circular(50),
         ),
         filled: true,
-        fillColor: Theme.of(context).primaryColor,
+        fillColor: Theme.of(context).canvasColor,
         prefixIcon: Icon(
           prefixIcon,
         ),
         suffixIcon: suffixIcon,
       ),
       validator: validator,
-      onSaved: onSaved ,
+      onSaved: onSaved,
       onChanged: onChange,
+      style:Theme.of(context).textTheme.bodyText2 ,
     );
 
 void navigateTo(context, widget) => Navigator.push(
       context,
       MaterialPageRoute(builder: (BuildContext context) => widget),
     );
+
 void navigateAndFinish(context, widget) {
   Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => widget),
-          (Route<dynamic> route) => false);
+      (Route<dynamic> route) => false);
 }
 
 void showToast({
@@ -92,9 +92,48 @@ void showToast({
       textColor: Colors.white,
       fontSize: 16.0,
     );
-Widget myDivider()=>
-    Divider(
+
+Widget myDivider() => Divider(
       color: Colors.white,
       thickness: 0.3,
       height: 8,
+    );
+
+PreferredSizeWidget defaultAppBar({
+  required BuildContext context,
+  String? title,
+  List<Widget>? actions,
+}) =>
+    AppBar(
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Icon(
+          CupertinoIcons.arrow_uturn_left,
+          color: Theme.of(context).focusColor,
+        ),
+      ),
+      title: Text(
+        title!,
+        style: TextStyle(
+          fontFamily: 'jannah',
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+        ),
+      ),
+      titleSpacing: 2.0,
+      actions: actions,
+    );
+
+Widget defaultTextButton({
+  required String text,
+  required context,
+}) =>
+    TextButton(
+      onPressed: () {},
+      child: Text(
+        text,
+        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+      ),
     );

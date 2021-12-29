@@ -57,6 +57,7 @@ ThemeData lightTheme = ThemeData(
   focusColor: Colors.red,
   primarySwatch: Colors.red,
   primaryColor: Colors.grey.shade500,
+  canvasColor: Colors.white,
   primaryTextTheme: TextTheme(
     subtitle1: TextStyle(
       fontSize: 18,
@@ -131,5 +132,6 @@ ThemeData darkTheme = ThemeData(
   focusColor: Colors.white,
   primaryColor: Colors.grey.shade500,
   primarySwatch: Colors.amber,
+  canvasColor: Colors.white60,
 
 );

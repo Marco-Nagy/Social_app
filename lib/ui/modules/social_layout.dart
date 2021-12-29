@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:social_app/cubit/social_cubit.dart';
-import 'package:social_app/shared/Components.dart';
+import 'package:social_app/shared/components.dart';
 import 'package:social_app/ui/modules/post_screen.dart';
 
 class SocialLayout extends StatelessWidget {
@@ -53,7 +53,7 @@ class SocialLayout extends StatelessWidget {
 
   void onAddBoxTapped(context) {
     showMenu<String>(
-      color: Theme.of(context).cardColor,
+      color: Theme.of(context).backgroundColor,
       context: context,
       position: RelativeRect.fromLTRB(100, 80, 99.8, 100),
       //position where you want to show the menu on screen

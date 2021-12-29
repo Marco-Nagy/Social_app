@@ -76,8 +76,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
       cover: 'https://image.freepik.com/free-vector/modern-merry-christmas-card-with-claus_1361-2803.jp',
       isEmailVerified:false,
       bio: 'Write Your bio ...',
-
-
     );
     FirebaseFirestore.instance
         .collection('users')
