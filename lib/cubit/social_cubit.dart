@@ -93,7 +93,6 @@ class SocialCubit extends Cubit<SocialStates> {
   ];
 
   File? profileImage;
-
    getProfileImage() async {
     // Pick an image
     final imageProfile = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -109,8 +108,8 @@ class SocialCubit extends Cubit<SocialStates> {
   }
   getProfileCam()async{
     final imageProfile = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (profileImage != null) {
-      print('Image Path ==>> ${imageProfile!.path}');
+    if (imageProfile != null) {
+      print('Image Path ==>> ${imageProfile.path}');
       profileImage = File(imageProfile.path);
       emit(SocialProfileCamPickedSuccessState());
     } else {
