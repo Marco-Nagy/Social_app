@@ -129,9 +129,10 @@ PreferredSizeWidget defaultAppBar({
 Widget defaultTextButton({
   required String text,
   required context,
+  required VoidCallback? onPressed,
 }) =>
     TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text(
         text,
         style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
