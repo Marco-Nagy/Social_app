@@ -62,6 +62,7 @@ class SocialCoverImageUploadErrorState extends SocialStates {}
 //
 // class SocialCoverCamUploadErrorState extends SocialStates {}
 class SocialUserUpdateLoadingState extends SocialStates {}
+
 class SocialUserUpdateSuccessState extends SocialStates {}
 
 class SocialUserUpdateErrorState extends SocialStates {}
@@ -185,18 +186,28 @@ class SocialCubit extends Cubit<SocialStates> {
 //     print('Failed to Pic Image  $e');
 //   }
 // }
-  String profileImageUrl = '';
 
-  void uploadProfileImage() {
+  void uploadProfileImage({
+    required String name,
+    required String phone,
+    required String bio,
+
+  }) {
+    emit(SocialUserUpdateLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('users/${Uri.file(profileImage!.path).pathSegments.last}')
         .putFile(profileImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        emit(SocialProfileImageUploadSuccessState());
-        value = profileImageUrl;
-        print(value);
+        //emit(SocialProfileImageUploadSuccessState());
+        updateUserData(
+          name: name,
+          phone: phone,
+          bio: bio,
+          image: value.toString(),
+        );
+        print('DownloadURL ==> $value');
       }).catchError((onError) {
         emit(SocialProfileImageUploadErrorState());
       });
@@ -205,17 +216,26 @@ class SocialCubit extends Cubit<SocialStates> {
     });
   }
 
-  String coverImageUrl = '';
 
-   uploadCoverImage() {
+  uploadCoverImage({
+    required String name,
+    required String phone,
+    required String bio,
+}) {
+    emit(SocialUserUpdateLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('users/${Uri.file(coverImage!.path).pathSegments.last}')
         .putFile(coverImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        emit(SocialCoverImageUploadSuccessState());
-        value = coverImageUrl;
+        //emit(SocialCoverImageUploadSuccessState());
+        updateUserData(
+          name: name,
+          phone: phone,
+          bio: bio,
+          cover: value,
+        );
         print(value);
       }).catchError((onError) {
         emit(SocialCoverImageUploadErrorState());
@@ -225,36 +245,50 @@ class SocialCubit extends Cubit<SocialStates> {
     });
   }
 
-   updateUser({
+  // updateUser({
+  //   required String name,
+  //   required String phone,
+  //   required String bio,
+  // }) {
+  //   emit(SocialUserUpdateLoadingState());
+  //   if (profileImage != null) {
+  //     uploadProfileImage();
+  //   } else if (coverImage != null) {
+  //     uploadCoverImage();
+  //   } else {
+  //     updateUserData(
+  //       name: name,
+  //       phone: phone,
+  //       bio: bio,
+  //     );
+  //   }
+  // }
+
+  updateUserData({
     required String name,
     required String phone,
     required String bio,
+    String? image,
+    String? cover,
   }) {
-    emit(SocialUserUpdateLoadingState());
-    if (profileImage != null) {
-      uploadProfileImage();
-    } else if (coverImage != null) {
-      uploadCoverImage();
-    } else {
-      UserData user = UserData(
-        name: name,
-        phone: phone,
-        isEmailVerified: false,
-        bio: bio,
-        email: userData.email,
-        image: userData.image,
-        cover: userData.cover,
-      );
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .update(user.toMap())
-          .then((value) {
-       getUserData();
-
-      }).catchError((onError) {
-        emit(SocialUserUpdateErrorState());
-      });
-    }
+    UserData user = UserData(
+      name: name,
+      phone: phone,
+      isEmailVerified: false,
+      bio: bio,
+      email: userData.email,
+      image: image ?? userData.image,
+      cover: cover ?? userData.cover,
+      uId: userData.uId,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .update(user.toMap())
+        .then((value) {
+      getUserData();
+    }).catchError((onError) {
+      emit(SocialUserUpdateErrorState());
+    });
   }
 }

@@ -4,29 +4,26 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 Widget defaultButton({
+  required BuildContext context,
   double width = double.infinity,
-  Color background = Colors.blue,
-  double radius = 30,
+  double radius = 25,
   required String text,
-  Function()? function,
+  required Function()? function,
   double? fontSize,
 }) =>
     Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
-        color: background,
+        color: Theme.of(context).primaryColor,
       ),
       child: MaterialButton(
         onPressed: function,
         child: Text(
-          text.toUpperCase(),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: fontSize,
-          ),
+          text.toString(),
+          style: Theme.of(context).textTheme.button,
         ),
       ),
     );

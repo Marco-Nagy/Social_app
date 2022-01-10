@@ -18,9 +18,15 @@ class EditProfileScreen extends StatelessWidget {
     return BlocConsumer<SocialCubit, SocialStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var userData = SocialCubit.get(context).userData;
-        var profileImage = SocialCubit.get(context).profileImage;
-        var coverImage = SocialCubit.get(context).coverImage;
+        var userData = SocialCubit
+            .get(context)
+            .userData;
+        var profileImage = SocialCubit
+            .get(context)
+            .profileImage;
+        var coverImage = SocialCubit
+            .get(context)
+            .coverImage;
         nameController.text = userData.name.toString();
         bioController.text = userData.bio.toString();
         phoneController.text = userData.phone.toString();
@@ -34,7 +40,7 @@ class EditProfileScreen extends StatelessWidget {
                 text: 'UPDATE',
                 context: context,
                 onPressed: () {
-                  SocialCubit.get(context).updateUser(
+                  SocialCubit.get(context).updateUserData(
                     name: nameController.text,
                     phone: phoneController.text,
                     bio: bioController.text,
@@ -81,10 +87,10 @@ class EditProfileScreen extends StatelessWidget {
                                     image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image: ((coverImage == null)
-                                              ? NetworkImageWithRetry(
-                                                  userData.cover.toString())
-                                              : FileImage(coverImage))
-                                          as ImageProvider,
+                                          ? NetworkImageWithRetry(
+                                          userData.cover.toString())
+                                          : FileImage(coverImage))
+                                      as ImageProvider,
                                     ),
                                   ),
                                 ),
@@ -123,23 +129,27 @@ class EditProfileScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color:
-                                            Theme.of(context).backgroundColor,
+                                        Theme
+                                            .of(context)
+                                            .backgroundColor,
                                       ),
                                     ),
                                   ),
                                   CircleAvatar(
                                     radius: 60,
                                     backgroundImage: ((profileImage == null)
-                                            ? NetworkImageWithRetry(
-                                                userData.image.toString())
-                                            : FileImage(profileImage))
-                                        as ImageProvider,
+                                        ? NetworkImageWithRetry(
+                                        userData.image.toString())
+                                        : FileImage(profileImage))
+                                    as ImageProvider,
                                   ),
                                 ],
                               ),
                               CircleAvatar(
                                 backgroundColor:
-                                    Theme.of(context).backgroundColor,
+                                Theme
+                                    .of(context)
+                                    .backgroundColor,
                                 radius: 20,
                               ),
                               InkWell(
@@ -163,6 +173,71 @@ class EditProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (SocialCubit
+                        .get(context)
+                        .profileImage != null ||
+                        SocialCubit
+                            .get(context)
+                            .coverImage != null)
+                      Row(
+                        children: [
+                          if (SocialCubit
+                              .get(context)
+                              .profileImage != null)
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  defaultButton(
+                                      text: 'Update Profile',
+                                      function: () {
+                                        SocialCubit.get(context)
+                                            .uploadProfileImage(
+                                          name: nameController.text,
+                                          phone: phoneController.text,
+                                          bio: bioController.text,);
+                                      },
+                                      context: context),
+                                  if (state is SocialUserUpdateLoadingState)
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  if (state is SocialUserUpdateLoadingState)
+                                  LinearProgressIndicator(),
+                                ],
+                              ),
+                            ),
+                          if (SocialCubit
+                              .get(context)
+                              .coverImage != null)
+                          Expanded(
+                            child: Column(
+                              children: [
+                                defaultButton(
+                                  text: 'Update Cover',
+                                  function: () {
+                                    SocialCubit.get(context).uploadCoverImage(
+                                      name: nameController.text,
+                                      phone: phoneController.text,
+                                      bio: bioController.text,
+                                    );
+                                  },
+                                  context: context,
+                                ),
+                                if (state is SocialUserUpdateLoadingState)
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                if (state is SocialUserUpdateLoadingState)
+                                LinearProgressIndicator(),
+
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     SizedBox(
                       height: 10,
                     ),
@@ -244,14 +319,18 @@ class EditProfileScreen extends StatelessWidget {
     required bool isCover,
   }) {
     showMenu<String>(
-      color: Theme.of(context).backgroundColor,
+      color: Theme
+          .of(context)
+          .backgroundColor,
       context: context,
       position: RelativeRect.fromLTRB(100, 80, 99.8, 100),
       //position where you want to show the menu on screen
       shape: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(
-          color: Theme.of(context).focusColor,
+          color: Theme
+              .of(context)
+              .focusColor,
           width: 2,
           style: BorderStyle.solid,
         ),
@@ -263,13 +342,18 @@ class EditProfileScreen extends StatelessWidget {
             children: [
               Text(
                 'Camera',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText1,
               ),
               Spacer(),
               SizedBox(
                 width: 8,
               ),
-              Icon(MaterialIcons.camera, color: Theme.of(context).focusColor),
+              Icon(MaterialIcons.camera, color: Theme
+                  .of(context)
+                  .focusColor),
             ],
           ),
         ),
@@ -280,10 +364,15 @@ class EditProfileScreen extends StatelessWidget {
               children: [
                 Text(
                   'Gallery',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyText1,
                 ),
                 Spacer(),
-                Icon(Icons.album, color: Theme.of(context).focusColor),
+                Icon(Icons.album, color: Theme
+                    .of(context)
+                    .focusColor),
               ],
             ),
           ),

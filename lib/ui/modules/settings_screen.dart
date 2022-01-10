@@ -164,7 +164,7 @@ class SettingsScreen extends StatelessWidget {
                       onPressed: () {},
                       child: Text(
                         'Add Photos',
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.subtitle1,
                       ),
                       style: ButtonStyle(
                         side: MaterialStateProperty.all(
@@ -211,7 +211,7 @@ class SettingsScreen extends StatelessWidget {
                           SizedBox(width: 10,),
                           Text(
                             'Logout',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
                       ),
