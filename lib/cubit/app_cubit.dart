@@ -19,13 +19,13 @@ class AppCubit extends Cubit<AppState> {
   void getAppMode(){
    isDark = MyShared.sharedPreferences.getBool("isDark")??false;
    themeMode =(isDark)? ThemeMode.dark: ThemeMode.light;
-   iconMode =(isDark)? Icon(Icons.light_mode,):Icon(Icons.dark_mode, color: Colors.black,);
+   iconMode =(isDark)? Icon(Icons.light_mode,):Icon(Icons.dark_mode, color: Colors.red,);
    emit(ChangeMoodState());
   }
   void changeAppMood() {
     isDark = !isDark;
     themeMode =(isDark)? ThemeMode.dark: ThemeMode.light;
-    iconMode =(isDark)? Icon(Icons.light_mode,):Icon(Icons.dark_mode, color: Colors.black,);
+    iconMode =(isDark)? Icon(Icons.light_mode,):Icon(Icons.dark_mode, color: Colors.red,);
     MyShared.saveData('isDark',  isDark);
     emit(ChangeMoodState());
   }

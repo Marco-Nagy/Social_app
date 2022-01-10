@@ -41,13 +41,19 @@ ThemeData lightTheme = ThemeData(
     subtitle1: TextStyle(
       fontSize:16,
       fontWeight: FontWeight.w600,
-      color: Colors.white60,
+      color: Colors.red,
     ),
     subtitle2: TextStyle(
-      fontSize:16,
+      fontSize:14,
       fontWeight: FontWeight.w400,
-      color: Colors.blueGrey,
+      color: Colors.red,
     ),
+    button: TextStyle(
+      fontSize:14,
+      fontWeight: FontWeight.w600,
+      color: Colors.white,
+    ),
+
   ),
   cardTheme: CardTheme(
     color: Colors.blue,
@@ -56,7 +62,7 @@ ThemeData lightTheme = ThemeData(
   backgroundColor: Colors.white,
   focusColor: Colors.red,
   primarySwatch: Colors.red,
-  primaryColor: Colors.grey.shade500,
+  primaryColor: Colors.red,
   canvasColor: Colors.white,
   primaryTextTheme: TextTheme(
     subtitle1: TextStyle(
@@ -109,12 +115,17 @@ ThemeData darkTheme = ThemeData(
     subtitle1: TextStyle(
       fontSize:16,
       fontWeight: FontWeight.w600,
-      color: Colors.white,
+      color: Colors.amber,
     ),
     subtitle2: TextStyle(
       fontSize:15,
       fontWeight: FontWeight.w400,
-      color: Colors.white60,
+      color: Colors.white,
+    ),
+    button: TextStyle(
+      fontSize:14,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
     ),
 
   ),
@@ -129,8 +140,8 @@ ThemeData darkTheme = ThemeData(
     color: Colors.grey.shade600,
   ),
   backgroundColor: Colors.black,
-  focusColor: Colors.white,
-  primaryColor: Colors.grey.shade500,
+  focusColor: Colors.amber,
+  primaryColor: Colors.amber,
   primarySwatch: Colors.amber,
   canvasColor: Colors.white60,
 
