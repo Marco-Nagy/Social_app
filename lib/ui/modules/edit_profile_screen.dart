@@ -10,6 +10,7 @@ class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({Key? key}) : super(key: key);
   var nameController = TextEditingController();
   var bioController = TextEditingController();
+  var phoneController = TextEditingController();
   bool? isImage;
 
   @override
@@ -22,13 +23,25 @@ class EditProfileScreen extends StatelessWidget {
         var coverImage = SocialCubit.get(context).coverImage;
         nameController.text = userData.name.toString();
         bioController.text = userData.bio.toString();
+        phoneController.text = userData.phone.toString();
         print("profileData=>> " + userData.toString());
         return Scaffold(
           appBar: defaultAppBar(
             context: context,
             title: 'Edit Profile',
             actions: [
-              defaultTextButton(text: 'UPDATE', context: context),
+              defaultTextButton(
+                text: 'UPDATE',
+                context: context,
+                onPressed: () {
+                  SocialCubit.get(context).updateUser(
+                    name: nameController.text,
+                    phone: phoneController.text,
+                    bio: bioController.text,
+                  );
+                  print('imageStorage===>> $profileImage');
+                },
+              ),
               SizedBox(
                 width: 15,
               )
@@ -36,41 +49,104 @@ class EditProfileScreen extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
               children: [
-                Container(
-                  height: 220,
-                  child: Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: [
-                      Align(
-                        child: Stack(
-                          alignment: AlignmentDirectional.topEnd,
-                          children: [
-                            Container(
-                              height: 160,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15),
+                if (state is SocialUserUpdateLoadingState)
+                  LinearProgressIndicator(),
+                if (state is SocialUserUpdateLoadingState)
+                  SizedBox(
+                    height: 10,
+                  ),
+                Column(
+                  children: [
+                    Container(
+                      height: 220,
+                      child: Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
+                        children: [
+                          Align(
+                            child: Stack(
+                              alignment: AlignmentDirectional.topEnd,
+                              children: [
+                                Container(
+                                  height: 160,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15),
+                                    ),
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: ((coverImage == null)
+                                              ? NetworkImageWithRetry(
+                                                  userData.cover.toString())
+                                              : FileImage(coverImage))
+                                          as ImageProvider,
+                                    ),
+                                  ),
                                 ),
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image:((coverImage == null)
-                                      ? NetworkImageWithRetry(
-                                      userData.cover.toString())
-                                      : FileImage(coverImage)) as ImageProvider,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      onCamIconTapped(
+                                        context: context,
+                                        isCover: true,
+                                      );
+                                    },
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.blue,
+                                      child: Icon(
+                                        Icons.camera_enhance_rounded,
+                                        size: 17,
+                                      ),
+                                      radius: 18,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
+                            alignment: AlignmentDirectional.topCenter,
+                          ),
+                          Stack(
+                            alignment: Alignment.bottomRight,
+                            children: [
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 65,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:
+                                            Theme.of(context).backgroundColor,
+                                      ),
+                                    ),
+                                  ),
+                                  CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage: ((profileImage == null)
+                                            ? NetworkImageWithRetry(
+                                                userData.image.toString())
+                                            : FileImage(profileImage))
+                                        as ImageProvider,
+                                  ),
+                                ],
+                              ),
+                              CircleAvatar(
+                                backgroundColor:
+                                    Theme.of(context).backgroundColor,
+                                radius: 20,
+                              ),
+                              InkWell(
                                 onTap: () {
                                   onCamIconTapped(
-                                    context: context, isCover: true,
-
+                                    context: context,
+                                    isCover: false,
                                   );
                                 },
                                 child: CircleAvatar(
@@ -82,85 +158,49 @@ class EditProfileScreen extends StatelessWidget {
                                   radius: 18,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        alignment: AlignmentDirectional.topCenter,
-                      ),
-                      Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              CircleAvatar(
-                                radius: 65,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Theme.of(context).backgroundColor,
-                                  ),
-                                ),
-                              ),
-                              CircleAvatar(
-                                radius: 60,
-                                backgroundImage: ((profileImage == null)
-                                    ? NetworkImageWithRetry(
-                                        userData.image.toString())
-                                    : FileImage(profileImage)) as ImageProvider,
-                              ),
                             ],
-                          ),
-                          CircleAvatar(
-                            backgroundColor: Theme.of(context).backgroundColor,
-                            radius: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              onCamIconTapped(
-                                context: context,
-                                isCover: false,
-                              );
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              child: Icon(
-                                Icons.camera_enhance_rounded,
-                                size: 17,
-                              ),
-                              radius: 18,
-                            ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                defaultTextField(
-                  controller: nameController,
-                  type: TextInputType.text,
-                  validator: (value) => nameValidator(value),
-                  label: "Name",
-                  prefixIcon: Feather.users,
-                  inputAction: TextInputAction.next,
-                  context: context,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                defaultTextField(
-                  controller: bioController,
-                  type: TextInputType.text,
-                  validator: (value) => bioValidator(value),
-                  label: "Bio",
-                  prefixIcon: Entypo.info_with_circle,
-                  context: context,
-                ),
-                SizedBox(
-                  height: 30,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    defaultTextField(
+                      controller: nameController,
+                      type: TextInputType.text,
+                      validator: (value) => nameValidator(value),
+                      label: "Name",
+                      prefixIcon: Feather.users,
+                      inputAction: TextInputAction.next,
+                      context: context,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    defaultTextField(
+                      controller: bioController,
+                      type: TextInputType.text,
+                      validator: (value) => bioValidator(value),
+                      label: "Bio",
+                      prefixIcon: Entypo.info_with_circle,
+                      context: context,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    defaultTextField(
+                      controller: phoneController,
+                      type: TextInputType.phone,
+                      validator: (value) => phoneValidator(value),
+                      label: "Phone",
+                      prefixIcon: Entypo.mobile,
+                      context: context,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -183,11 +223,25 @@ class EditProfileScreen extends StatelessWidget {
     }
     return null;
   }
+
+  phoneValidator(String? value) {
+    if (value!.isEmpty) {
+      return "please Enter Phone Number";
+    }
+    String pattern = r'(^(?:[+0]9)?[0-9]{11}$)';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return 'Please enter mobile number';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid mobile number';
+    }
+  }
+
   bool? isCam;
+
   void onCamIconTapped({
     required context,
     required bool isCover,
-
   }) {
     showMenu<String>(
       color: Theme.of(context).backgroundColor,
@@ -240,14 +294,13 @@ class EditProfileScreen extends StatelessWidget {
       if (itemSelected == null) return;
 
       if (itemSelected == "1") {
-        isCover?
-        SocialCubit.get(context).getCoverCam()
-        :SocialCubit.get(context).getProfileCam();
+        isCover
+            ? SocialCubit.get(context).getCoverCam()
+            : SocialCubit.get(context).getProfileCam();
       } else if (itemSelected == "2") {
-        isCover?
-        SocialCubit.get(context).getCoverImage()
-            :SocialCubit.get(context).getProfileImage();
-
+        isCover
+            ? SocialCubit.get(context).getCoverImage()
+            : SocialCubit.get(context).getProfileImage();
       } else {
         //code here
       }
