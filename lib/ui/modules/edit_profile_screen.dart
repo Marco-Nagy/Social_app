@@ -50,7 +50,7 @@ class EditProfileScreen extends StatelessWidget {
               ),
               SizedBox(
                 width: 15,
-              )
+              ),
             ],
           ),
           body: Padding(
