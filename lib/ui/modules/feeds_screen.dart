@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:social_app/cubit/social_cubit.dart';
 
 import 'package:social_app/shared/components.dart';
+import 'package:social_app/ui/models/post_model.dart';
 import 'package:social_app/ui/modules/story_screen.dart';
 
 class FeedsScreen extends StatelessWidget {
@@ -14,6 +16,7 @@ class FeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SocialCubit.get(context).getPosts();
     return BlocConsumer<SocialCubit,SocialStates>(
       listener: (context, state) {},
 
@@ -29,12 +32,16 @@ class FeedsScreen extends StatelessWidget {
           children: [
             buildStories(context),
             myDivider(),
-            ListView.separated(
-              physics: BouncingScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) => buildPostItem(context),
-              separatorBuilder: (context, index) => myDivider(),
-              itemCount: 20,
+            ConditionalBuilder(
+              fallback: ( context) => Center(child: CircularProgressIndicator()),
+              condition: SocialCubit.get(context).posts.length > 0,
+              builder: ( context) =>ListView.separated(
+                physics: BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) => buildPostItem(SocialCubit.get(context).posts[index],context),
+                separatorBuilder: (context, index) => myDivider(),
+                itemCount: SocialCubit.get(context).posts.length,
+              ),
             ),
           ],
         ),
@@ -150,7 +157,7 @@ class FeedsScreen extends StatelessWidget {
     );
   }
 
-  buildPostItem(context) {
+  buildPostItem(NewPost newPost,context) {
     return Card(
       color: Theme.of(context).backgroundColor,
       elevation: 15,
@@ -190,10 +197,7 @@ class FeedsScreen extends StatelessWidget {
                             CircleAvatar(
                               radius: 23,
                               backgroundImage: NetworkImageWithRetry(
-                                  SocialCubit.get(context)
-                                      .userData
-                                      .image
-                                      .toString()),
+                                  newPost.image.toString()),
                             ),
                           ],
                         ),
@@ -208,7 +212,7 @@ class FeedsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Marco Nagy',
+                          newPost.name.toString(),
                           style: Theme.of(context).textTheme.bodyText1,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -217,7 +221,7 @@ class FeedsScreen extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          'Alexandria El-Montazah ',
+                          newPost.dateTime.toString(),
                           style: Theme.of(context).textTheme.bodyText2,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -235,6 +239,7 @@ class FeedsScreen extends StatelessWidget {
                 ],
               ),
             ),
+            if(newPost.postImage!= '')
             Card(
               clipBehavior: Clip.antiAlias,
               elevation: 5,
@@ -243,7 +248,7 @@ class FeedsScreen extends StatelessWidget {
                 height: 300,
                 fit: BoxFit.fill,
                 image: NetworkImage(
-                  'https://image.freepik.com/free-vector/modern-merry-christmas-card-with-claus_1361-2803.jpg',
+                  newPost.postImage.toString(),
                 ),
               ),
             ),
@@ -286,7 +291,7 @@ class FeedsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                '14304 Likes',
+                '0 Likes',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -296,14 +301,14 @@ class FeedsScreen extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Marco Nagy',
+                      text: newPost.name.toString(),
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     TextSpan(
                       text: ' ',
                     ),
                     TextSpan(
-                      text: 'Hello world Hello world Hello world Hello world',
+                      text: newPost.text,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ],

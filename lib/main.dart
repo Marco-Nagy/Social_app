@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
           create: (context) =>AppCubit()..getAppMode(),
         ),
         BlocProvider(
-          create: (context) =>SocialCubit(SocialInitialState())..getUserData(),
+          create: (context) =>SocialCubit(SocialInitialState())..getUserData()
+          ,
         ),
         BlocProvider(
           create: (context) => LoginCubit(),

@@ -72,10 +72,19 @@ class SocialPostImagePickedErrorState extends SocialStates {}
 
 class SocialPostImageUploadSuccessState extends SocialStates {}
 
-
 class SocialPostImageUploadErrorState extends SocialStates {}
 
 class SocialRemovePostImageSuccessState extends SocialStates {}
+
+class SocialGetPostsLoadingState extends SocialStates {}
+
+class SocialGetPostsSuccessState extends SocialStates {}
+
+class SocialGetPostsErrorState extends SocialStates {
+  final String error;
+
+  SocialGetPostsErrorState(this.error);
+}
 
 class SocialCubit extends Cubit<SocialStates> {
   SocialCubit(SocialStates initialState) : super(initialState);
@@ -303,6 +312,7 @@ class SocialCubit extends Cubit<SocialStates> {
   //Create Post
 
   File? postImage;
+
   getPostImage() async {
     // Pick an image
     final imagePost =
@@ -316,10 +326,12 @@ class SocialCubit extends Cubit<SocialStates> {
       emit(SocialPostImagePickedErrorState());
     }
   }
-  removePostImage(){
+
+  removePostImage() {
     postImage = null;
     emit(SocialRemovePostImageSuccessState());
   }
+
   uploadPostImage({
     required String dateTime,
     required String text,
@@ -367,6 +379,23 @@ class SocialCubit extends Cubit<SocialStates> {
       emit(SocialCreatePostSuccessState());
     }).catchError((onError) {
       emit(SocialCreatePostErrorState());
+    });
+  }
+
+  List<NewPost> posts = [];
+
+  getPosts() {
+    FirebaseFirestore.instance
+        .collection('posts')
+        .get()
+        .then((value) {
+          value.docs.forEach((element) {
+            posts.add(NewPost.fromJson(element.data()));
+          });
+          emit(SocialGetPostsSuccessState());
+    })
+        .catchError((error){
+          emit(SocialGetPostsErrorState(error.toString()));
     });
   }
 }
