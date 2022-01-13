@@ -7,13 +7,17 @@ import 'package:social_app/cubit/social_cubit.dart';
 import 'package:social_app/shared/components.dart';
 
 class PostScreen extends StatelessWidget {
-  const PostScreen({Key? key}) : super(key: key);
-
+  PostScreen({Key? key}) : super(key: key);
+  var postController = TextEditingController();
+  var now = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit, SocialStates>(
       listener: (context, state) {},
       builder: (context, state) {
+        var postImage = SocialCubit
+            .get(context)
+            .postImage;
         return Scaffold(
           appBar: defaultAppBar(
             context: context,
@@ -22,8 +26,21 @@ class PostScreen extends StatelessWidget {
               defaultTextButton(
                 text: 'POST',
                 context: context,
-                onPressed: () {},
+                onPressed: () {
+                  if (postImage== null) {
+                    SocialCubit.get(context).createNewPost(
+                      dateTime: now.toString(),
+                      text: postController.text,
+                    );
+                  } else {
+                    SocialCubit.get(context).uploadPostImage(
+                      dateTime: now.toString(),
+                      text: postController.text,
+                    );
+                  }
+                },
               ),
+
               SizedBox(
                 width: 15,
               ),
@@ -34,6 +51,10 @@ class PostScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if(state is SocialCreatePostLoadingState)
+                  LinearProgressIndicator(),
+                if(state is SocialCreatePostLoadingState)
+                SizedBox(height: 10,),
                 Row(
                   children: [
                     InkWell(
@@ -94,6 +115,7 @@ class PostScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: TextFormField(
+                    controller: postController,
                     decoration: InputDecoration(
                       hintText: 'What is on your mind,...',
                       hintStyle: Theme.of(context).textTheme.bodyText2,
@@ -101,30 +123,77 @@ class PostScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Ionicons.image,color: Theme.of(context).primaryColor,),
-                          SizedBox(width: 5,),
-                          Text('add Photo',
-                            style: Theme.of(context).textTheme.subtitle1,),
-                        ],
+                if(SocialCubit.get(context).postImage != null)
+                Expanded(
+                  child: Stack(
+                    alignment: AlignmentDirectional.topEnd,
+                    children: [
+                      Container(
+                        height: 160,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: FileImage(postImage!),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            SocialCubit.get(context).removePostImage();
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.blue,
+                            child: Icon(
+                              Icons.close,
+                              size: 17,
+                            ),
+                            radius: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          SocialCubit.get(context).getPostImage();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Ionicons.image,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              'add Photo',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child:    Text('# tags',
-                        style: Theme.of(context).textTheme.subtitle1,),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '# tags',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ),
                     ),
-                  ),
-
-                ],)
+                  ],
+                )
               ],
             ),
           ),

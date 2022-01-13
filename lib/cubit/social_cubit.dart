@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/data/my_shared.dart';
+import 'package:social_app/ui/models/post_model.dart';
 import 'package:social_app/ui/models/user_model.dart';
 import 'package:social_app/ui/modules/feeds_screen.dart';
 import 'package:social_app/ui/modules/search_screen.dart';
@@ -53,19 +54,28 @@ class SocialCoverImageUploadSuccessState extends SocialStates {}
 
 class SocialCoverImageUploadErrorState extends SocialStates {}
 
-//
-// class SocialProfileCamUploadSuccessState extends SocialStates {}
-//
-// class SocialProfileCamUploadErrorState extends SocialStates {}
-//
-// class SocialCoverCamUploadSuccessState extends SocialStates {}
-//
-// class SocialCoverCamUploadErrorState extends SocialStates {}
 class SocialUserUpdateLoadingState extends SocialStates {}
 
 class SocialUserUpdateSuccessState extends SocialStates {}
 
 class SocialUserUpdateErrorState extends SocialStates {}
+
+class SocialCreatePostLoadingState extends SocialStates {}
+
+class SocialCreatePostSuccessState extends SocialStates {}
+
+class SocialCreatePostErrorState extends SocialStates {}
+
+class SocialPostImagePickedSuccessState extends SocialStates {}
+
+class SocialPostImagePickedErrorState extends SocialStates {}
+
+class SocialPostImageUploadSuccessState extends SocialStates {}
+
+
+class SocialPostImageUploadErrorState extends SocialStates {}
+
+class SocialRemovePostImageSuccessState extends SocialStates {}
 
 class SocialCubit extends Cubit<SocialStates> {
   SocialCubit(SocialStates initialState) : super(initialState);
@@ -191,7 +201,6 @@ class SocialCubit extends Cubit<SocialStates> {
     required String name,
     required String phone,
     required String bio,
-
   }) {
     emit(SocialUserUpdateLoadingState());
     firebase_storage.FirebaseStorage.instance
@@ -216,12 +225,11 @@ class SocialCubit extends Cubit<SocialStates> {
     });
   }
 
-
   uploadCoverImage({
     required String name,
     required String phone,
     required String bio,
-}) {
+  }) {
     emit(SocialUserUpdateLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
@@ -289,6 +297,76 @@ class SocialCubit extends Cubit<SocialStates> {
       getUserData();
     }).catchError((onError) {
       emit(SocialUserUpdateErrorState());
+    });
+  }
+
+  //Create Post
+
+  File? postImage;
+  getPostImage() async {
+    // Pick an image
+    final imagePost =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (imagePost != null) {
+      print('Image Path ==>> ${imagePost.path}');
+      postImage = File(imagePost.path);
+      emit(SocialPostImagePickedSuccessState());
+    } else {
+      print('no image Selected');
+      emit(SocialPostImagePickedErrorState());
+    }
+  }
+  removePostImage(){
+    postImage = null;
+    emit(SocialRemovePostImageSuccessState());
+  }
+  uploadPostImage({
+    required String dateTime,
+    required String text,
+  }) {
+    emit(SocialCreatePostLoadingState());
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('users/${Uri.file(postImage!.path).pathSegments.last}')
+        .putFile(postImage!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        //emit(SocialCoverImageUploadSuccessState());
+        createNewPost(
+          dateTime: dateTime,
+          text: text,
+          postImage: value,
+        );
+        print(value);
+      }).catchError((onError) {
+        emit(SocialPostImageUploadErrorState());
+      });
+    }).catchError((error) {
+      emit(SocialPostImageUploadErrorState());
+    });
+  }
+
+  createNewPost({
+    required String dateTime,
+    required String text,
+    String? postImage,
+  }) {
+    emit(SocialCreatePostLoadingState());
+    NewPost newPost = NewPost(
+      name: userData.name,
+      uId: userData.uId,
+      image: userData.image,
+      dateTime: dateTime,
+      postImage: postImage ?? '',
+      text: text,
+    );
+    FirebaseFirestore.instance
+        .collection('posts')
+        .add(newPost.toMap())
+        .then((value) {
+      emit(SocialCreatePostSuccessState());
+    }).catchError((onError) {
+      emit(SocialCreatePostErrorState());
     });
   }
 }
