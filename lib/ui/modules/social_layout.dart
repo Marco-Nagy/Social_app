@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:social_app/cubit/social_cubit.dart';
 import 'package:social_app/shared/components.dart';
+import 'package:social_app/ui/modules/notifications_screen.dart';
 import 'package:social_app/ui/modules/post_screen.dart';
 
 class SocialLayout extends StatelessWidget {
@@ -47,7 +48,10 @@ class SocialLayout extends StatelessWidget {
           IconButton(
               onPressed: () {}, icon: Icon(MaterialIcons.favorite_border),color: Theme.of(context).focusColor,),
 
-          IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.chat_bubble),color: Theme.of(context).focusColor,),
+          IconButton(onPressed: () {
+            navigateTo(context, NotificationsScreen());
+
+          }, icon: Icon(MaterialIcons.notifications),color: Theme.of(context).focusColor,),
         ],
       );
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
@@ -53,6 +54,10 @@ ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.w600,
       color: Colors.white,
     ),
+    headline6: TextStyle(
+      fontSize:16,
+      color: Colors.white,
+    ),
 
   ),
   cardTheme: CardTheme(
@@ -64,6 +69,7 @@ ThemeData lightTheme = ThemeData(
   primarySwatch: Colors.red,
   primaryColor: Colors.red,
   canvasColor: Colors.white,
+  highlightColor:Colors.blue,
   primaryTextTheme: TextTheme(
     subtitle1: TextStyle(
       fontSize: 18,
@@ -127,6 +133,11 @@ ThemeData darkTheme = ThemeData(
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
+    headline1: TextStyle(
+      fontSize:16,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    ),
 
   ),
   primaryTextTheme: TextTheme(
@@ -140,9 +151,9 @@ ThemeData darkTheme = ThemeData(
     color: Colors.grey.shade600,
   ),
   backgroundColor: Colors.black,
-  focusColor: Colors.amber,
+  focusColor: Colors.amber.shade600,
   primaryColor: Colors.amber,
   primarySwatch: Colors.amber,
   canvasColor: Colors.white60,
-
+  highlightColor:Colors.grey.shade600,
 );

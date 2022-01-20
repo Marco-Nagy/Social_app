@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_image/network.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:social_app/cubit/social_cubit.dart';
 
 import 'package:social_app/shared/components.dart';
@@ -16,10 +17,9 @@ class FeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SocialCubit.get(context).getPosts();
+    //SocialCubit.get(context).getPosts();
     return BlocConsumer<SocialCubit,SocialStates>(
       listener: (context, state) {},
-
       builder: (context, state) {
         return screenBody(context);
       },
@@ -38,7 +38,7 @@ class FeedsScreen extends StatelessWidget {
               builder: ( context) =>ListView.separated(
                 physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
-                itemBuilder: (context, index) => buildPostItem(SocialCubit.get(context).posts[index],context),
+                itemBuilder: (context, index) => buildPostItem(SocialCubit.get(context).posts[index],context,index),
                 separatorBuilder: (context, index) => myDivider(),
                 itemCount: SocialCubit.get(context).posts.length,
               ),
@@ -157,7 +157,7 @@ class FeedsScreen extends StatelessWidget {
     );
   }
 
-  buildPostItem(NewPost newPost,context) {
+  buildPostItem(NewPost newPost,context,index) {
     return Card(
       color: Theme.of(context).backgroundColor,
       elevation: 15,
@@ -245,7 +245,8 @@ class FeedsScreen extends StatelessWidget {
               elevation: 5,
               shadowColor: Colors.white,
               child: Image(
-                height: 300,
+                height: 35.h,
+                width: double.infinity,
                 fit: BoxFit.fill,
                 image: NetworkImage(
                   newPost.postImage.toString(),
@@ -257,8 +258,14 @@ class FeedsScreen extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(
+                    onPressed: () {
+                      //SocialCubit.get(context).onLikePressed(SocialCubit.get(context).postsId[index]);
+                      SocialCubit.get(context).likePosts(SocialCubit.get(context).postsId[index]);
+                    },
+                    icon: SocialCubit.get(context).like
+                        ? Icon(MaterialIcons.favorite,
+                      color: Colors.redAccent,
+                    ):Icon(
                       MaterialIcons.favorite_border,
                       color: Colors.redAccent,
                     ),
@@ -291,7 +298,7 @@ class FeedsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                '0 Likes',
+                '${SocialCubit.get(context).likes[index]} Likes',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 Widget defaultButton({
   required BuildContext context,
@@ -87,7 +88,7 @@ void showToast({
       timeInSecForIosWeb: 5,
       backgroundColor: Colors.green,
       textColor: Colors.white,
-      fontSize: 16.0,
+      fontSize: 16.sp,
     );
 
 Widget myDivider() => Divider(

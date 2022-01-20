@@ -46,6 +46,10 @@ dependencies:
   focused_menu: ^1.0.5
   flutter_image: ^4.1.0
   firebase_storage: ^10.2.5
+  device_preview: ^1.0.0
+  responsive_sizer: ^3.0.5+1
+
+
 
 dev_dependencies:
   flutter_test:
