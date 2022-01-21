@@ -34,7 +34,7 @@ class FeedsScreen extends StatelessWidget {
             myDivider(),
             ConditionalBuilder(
               fallback: ( context) => Center(child: CircularProgressIndicator()),
-              condition: SocialCubit.get(context).posts.length > 0,
+              condition: SocialCubit.get(context).posts.isNotEmpty ,
               builder: ( context) =>ListView.separated(
                 physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
