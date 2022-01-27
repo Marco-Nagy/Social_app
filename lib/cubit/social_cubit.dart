@@ -9,7 +9,7 @@ import 'package:social_app/ui/models/message_model.dart';
 import 'package:social_app/ui/models/post_model.dart';
 import 'package:social_app/ui/models/user_model.dart';
 import 'package:social_app/ui/modules/chats/chats_screen.dart';
-import 'package:social_app/ui/modules/feeds_screen.dart';
+import 'package:social_app/ui/modules/feeds/feeds_screen.dart';
 import 'package:social_app/ui/modules/settings_screen.dart';
 import 'package:social_app/ui/modules/users_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;

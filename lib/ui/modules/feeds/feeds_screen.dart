@@ -10,7 +10,8 @@ import 'package:social_app/cubit/social_cubit.dart';
 
 import 'package:social_app/shared/components.dart';
 import 'package:social_app/ui/models/post_model.dart';
-import 'package:social_app/ui/modules/story_screen.dart';
+import 'package:social_app/ui/modules/feeds/comment_screen.dart';
+import 'package:social_app/ui/modules/feeds/story_screen.dart';
 
 class FeedsScreen extends StatelessWidget {
   const FeedsScreen({Key? key}) : super(key: key);
@@ -161,7 +162,7 @@ class FeedsScreen extends StatelessWidget {
     return Card(
       color: Theme.of(context).backgroundColor,
       elevation: 15,
-      shadowColor: Theme.of(context).primaryColor,
+
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
@@ -271,7 +272,9 @@ class FeedsScreen extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      navigateTo(context, CommentsScreen());
+                    },
                     icon: Icon(
                       CupertinoIcons.chat_bubble,
                       color: Colors.blue.shade300,

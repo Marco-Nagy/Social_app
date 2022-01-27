@@ -95,7 +95,7 @@ class ChatsDetailsScreen extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(25.0),
                 ),
                 //clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: Row(
@@ -106,7 +106,7 @@ class ChatsDetailsScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'type your message here ...',
-                          hintStyle: Theme.of(context).textTheme.headline6,
+                          hintStyle: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                     ),

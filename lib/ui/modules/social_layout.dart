@@ -5,7 +5,7 @@ import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:social_app/cubit/social_cubit.dart';
 import 'package:social_app/shared/components.dart';
 import 'package:social_app/ui/modules/notifications_screen.dart';
-import 'package:social_app/ui/modules/post_screen.dart';
+import 'package:social_app/ui/modules/feeds/post_screen.dart';
 
 class SocialLayout extends StatelessWidget {
   const SocialLayout({Key? key}) : super(key: key);

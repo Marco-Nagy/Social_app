@@ -29,7 +29,7 @@ class PostScreen extends StatelessWidget {
                 onPressed: () {
                   if (postImage== null) {
                     SocialCubit.get(context).createNewPost(
-                      dateTime: now.toString(),
+                      dateTime: now.millisecond.toString(),
                       text: postController.text,
                     );
                   } else {
