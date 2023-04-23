@@ -7,9 +7,8 @@ import 'package:social_app/ui/modules/social_layout.dart';
 
 import '../../../shared/components.dart';
 
-
 class RegisterScreen extends StatelessWidget {
-   RegisterScreen({Key? key}) : super(key: key);
+  RegisterScreen({Key? key}) : super(key: key);
 
   var emailController = TextEditingController();
   var userNameController = TextEditingController();
@@ -19,19 +18,15 @@ class RegisterScreen extends StatelessWidget {
   var formKye = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-
-
     return BlocProvider(
       create: (context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit, RegisterStates>(
-
         listener: (context, state) {
-          if(state is CreateUserSuccessState){
+          if (state is CreateUserSuccessState) {
             navigateAndFinish(context, SocialLayout());
           }
         },
         builder: (context, state) {
-
           return Scaffold(
             body: SafeArea(
               child: Container(
@@ -71,7 +66,8 @@ class RegisterScreen extends StatelessWidget {
                             validator: (value) => emailValidator(value),
                             label: "Email Address",
                             prefixIcon: Icons.mail,
-                            inputAction: TextInputAction.next, context: context),
+                            inputAction: TextInputAction.next,
+                            context: context),
                         SizedBox(
                           height: 10,
                         ),
@@ -81,7 +77,8 @@ class RegisterScreen extends StatelessWidget {
                             validator: (value) => userNameValidator(value),
                             label: "User Name",
                             prefixIcon: Icons.person_rounded,
-                            inputAction: TextInputAction.next, context: context),
+                            inputAction: TextInputAction.next,
+                            context: context),
                         SizedBox(
                           height: 10,
                         ),
@@ -91,23 +88,27 @@ class RegisterScreen extends StatelessWidget {
                             validator: (value) => phoneValidator(value),
                             label: "Phone No",
                             prefixIcon: Icons.phone,
-                            inputAction: TextInputAction.next, context: context),
+                            inputAction: TextInputAction.next,
+                            context: context),
                         SizedBox(
                           height: 10,
                         ),
                         defaultTextField(
                           controller: passwordController,
                           type: TextInputType.text,
-                          obscureText:  RegisterCubit.get(context).passwordVisible,
+                          obscureText:
+                              RegisterCubit.get(context).passwordVisible,
                           validator: (value) => passwordValidator(value),
                           label: "password",
                           prefixIcon: Icons.lock_rounded,
                           suffixIcon: IconButton(
                             onPressed: () {
-                              RegisterCubit.get(context).changeRegisterPasswordVisibility();
+                              RegisterCubit.get(context)
+                                  .changeRegisterPasswordVisibility();
                             },
                             icon: Icon(RegisterCubit.get(context).suffix),
-                          ), context: context,
+                          ),
+                          context: context,
                         ),
                         SizedBox(
                           height: 10,
@@ -115,7 +116,8 @@ class RegisterScreen extends StatelessWidget {
                         defaultTextField(
                           controller: confirmPasswordController,
                           type: TextInputType.text,
-                          obscureText: RegisterCubit.get(context).passwordVisible,
+                          obscureText:
+                              RegisterCubit.get(context).passwordVisible,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "please Confirm Password";
@@ -130,18 +132,21 @@ class RegisterScreen extends StatelessWidget {
                           prefixIcon: Icons.lock_rounded,
                           suffixIcon: IconButton(
                             onPressed: () {
-                              RegisterCubit.get(context).changeRegisterPasswordVisibility();
+                              RegisterCubit.get(context)
+                                  .changeRegisterPasswordVisibility();
                             },
                             icon: Icon(RegisterCubit.get(context).suffix),
-                          ), context: context,
+                          ),
+                          context: context,
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         ConditionalBuilder(
                           condition: state is! RegisterLoadingState,
-                          fallback: (context) =>   Center(child: CircularProgressIndicator()),
-                          builder:(context) => defaultButton(
+                          fallback: (context) =>
+                              Center(child: CircularProgressIndicator()),
+                          builder: (context) => defaultButton(
                             text: "Create Account",
                             function: () {
                               if (formKye.currentState!.validate()) {
@@ -150,15 +155,14 @@ class RegisterScreen extends StatelessWidget {
                                   phone: phoneNumberController.text,
                                   email: emailController.text,
                                   password: passwordController.text,
-
                                 );
                                 print(emailController.text);
                                 print(passwordController.text);
                                 print(userNameController.text);
                                 print(phoneNumberController.text);
-
                               }
-                            }, context: context,
+                            },
+                            context: context,
                           ),
                         ),
                         SizedBox(

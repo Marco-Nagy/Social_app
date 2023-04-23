@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:social_app/cubit/social_cubit.dart';
 import 'package:social_app/shared/components.dart';
-import 'package:social_app/ui/modules/notifications_screen.dart';
 import 'package:social_app/ui/modules/feeds/post_screen.dart';
+import 'package:social_app/ui/modules/notifications_screen.dart';
 
 class SocialLayout extends StatelessWidget {
   const SocialLayout({Key? key}) : super(key: key);
@@ -41,17 +41,24 @@ class SocialLayout extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                onAddBoxTapped(context);
-              },
-              icon: Icon(MaterialIcons.add_box),color: Theme.of(context).focusColor,),
+            onPressed: () {
+              onAddBoxTapped(context);
+            },
+            icon: Icon(MaterialIcons.add_box),
+            color: Theme.of(context).focusColor,
+          ),
           IconButton(
-              onPressed: () {}, icon: Icon(MaterialIcons.favorite_border),color: Theme.of(context).focusColor,),
-
-          IconButton(onPressed: () {
-            navigateTo(context, NotificationsScreen());
-
-          }, icon: Icon(MaterialIcons.notifications),color: Theme.of(context).focusColor,),
+            onPressed: () {},
+            icon: Icon(MaterialIcons.favorite_border),
+            color: Theme.of(context).focusColor,
+          ),
+          IconButton(
+            onPressed: () {
+              navigateTo(context, NotificationsScreen());
+            },
+            icon: Icon(MaterialIcons.notifications),
+            color: Theme.of(context).focusColor,
+          ),
         ],
       );
 
@@ -61,7 +68,8 @@ class SocialLayout extends StatelessWidget {
       context: context,
       position: RelativeRect.fromLTRB(100, 80, 99.8, 100),
       //position where you want to show the menu on screen
-      shape: OutlineInputBorder(borderRadius: BorderRadius.circular(15),
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(
           color: Theme.of(context).focusColor,
           width: 2,
@@ -78,9 +86,10 @@ class SocialLayout extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Spacer(),
-              SizedBox(width: 8,),
-              Icon(MaterialIcons.post_add,
-                  color: Theme.of(context).focusColor),
+              SizedBox(
+                width: 8,
+              ),
+              Icon(MaterialIcons.post_add, color: Theme.of(context).focusColor),
             ],
           ),
         ),
